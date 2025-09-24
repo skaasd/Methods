@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div></div>
+    <input id="nuevoInvitado"> <!-- 1 -->
+    <button id="agregarInvitado">Agregar</button> <!-- 2 -->
+    <h3>Invitados: </h3>
+    <ul id="invitados"></ul> <!-- 3 -->
+
+
+    <script>
+        body = document.querySelector("body")
+        const valores = [200, 100, 500, 300, 250]
+        valores.forEach(x => body.innerHTML += `<p> ${2 * x} </p>`)
+
+        console.log(valores)
+
+
+        const inputInvitado = document.querySelector("#nuevoInvitado")
+        const btnAgregar = document.querySelector("#agregarInvitado")
+        const listaInvitados = document.querySelector("#invitados")
+
+        let asdasd
+
+        const invitados = []
+        btnAgregar.addEventListener("click", () => {
+            const valorInput = inputInvitado.value
+            invitados.push(valorInput)
+            inputInvitado.value = "";
+
+            let html = "";
+            for (let invitado of invitados)
+                html += `<li>${invitado} </li>`;
+
+
+            listaInvitados.innerHTML = html;
+
+
+
+        })
+
+        //     const listaDeInvitados = document.querySelector("#invitados")
+        //     const invitadoInput = document.querySelector("#nuevoInvitado")
+        //     const btnAgregar = document.querySelector("#agregarInvitado")
+
+        //     const invitados = []
+        //     btnAgregar.addEventListener("click", () => {
+        //         const nuevoInvitado = invitadoInput.value
+        //         invitados.push(nuevoInvitado)
+        //         invitadoInput.value = "" /* Vaciamos el input */
+
+        //         let html = ""
+        //         for (let invitado of invitados) {
+        //             html += `<li>${invitado} </li>`;
+
+        //         }
+        //         listaDeInvitados.innerHTML = html;
+        //     })
+
+        // </script>
+</body>
+
+</html>

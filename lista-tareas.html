@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <span id="cuenta-tareas"> </span>
+  <input id="nombreTarea" type="text">
+  <button id="btnAgregar">Agregar</button>
+  <ul id="listadoTareas"></ul>
+
+
+
+  <script>
+    const inputTarea = document.querySelector("#nombreTarea");
+    const agregarTarea = document.querySelector("#btnAgregar");
+    const tareas = document.querySelector("#listadoTareas");
+    const cuentaTareas = document.querySelector("#cuenta-tareas")
+
+    const listado_tareas = []
+    agregarTarea.addEventListener("click", () => {
+      const nuevaTarea = inputTarea.value.trim();
+      if (nuevaTarea === "") return;
+      listado_tareas.push({ id: Date.now(), nombre: nuevaTarea })
+      inputTarea.value = "";
+      cuentaTareas.textContent = listado_tareas.length;
+
+      let html = "";
+      for (let listado of listado_tareas)
+        html += `<li>${listado.nombre} <button onclick="borrar(${listado.id})">Eliminar</button></li>`
+
+      tareas.innerHTML = html;
+
+    })
+    function borrar(id) {
+      const index = listado_tareas.findIndex((ele) => ele.id === id)
+      if (index === -1) return;
+
+      listado_tareas.splice(index, 1)
+      cuentaTareas.textContent = listado_tareas.length;
+      let html = ""
+      for (let listado of listado_tareas)
+        html += `<li>${listado.nombre} <button
+                onclick="borrar(${listado.id})"> eliminar </button> </li>`;
+
+      tareas.innerHTML = html;
+    }
+
+    inputTarea.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") agregarTarea.click();
+    });
+
+
+  </script>
+
+
+
+  <script>
+    const inputTarea = document.querySelector("#nombreTarea");
+    const agregarTarea = document.querySelector("#btnAgregar");
+    const tareas = document.querySelector("#listadoTareas");
+    const cuentaTareas = document.querySelector("#cuenta-tareas");
+
+    const listado_tareas = [];
+
+    // 👉 función única para renderizar
+    function render() {
+      cuentaTareas.textContent = listado_tareas.length;
+      tareas.innerHTML = listado_tareas
+        .map(
+          (t) => `<li>${t.nombre} 
+          <button onclick="borrar(${t.id})">Eliminar</button>
+        </li>`
+        )
+        .join("");
+    }
+
+    agregarTarea.addEventListener("click", () => {
+      const nombre = inputTarea.value.trim();
+      if (!nombre) return;
+
+      listado_tareas.push({ id: Date.now(), nombre });
+      inputTarea.value = "";
+      render();
+    });
+
+    function borrar(id) {
+      const index = listado_tareas.findIndex((t) => t.id === id);
+      if (index === -1) return;
+      listado_tareas.splice(index, 1);
+      render();
+    }
+
+    inputTarea.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") agregarTarea.click();
+    });
+  </script>
+</body>
+
+</html>
