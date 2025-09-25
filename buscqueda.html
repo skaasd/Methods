@@ -9,17 +9,21 @@
 
 
 <body>
+    <div>
 
-    <input id="input">
-    <button id="btnBuscar">Buscar</button>
+        <input id="input">
+        <button id="btnBuscar">Buscar</button>
+        <input id="inputAdd">
+        <button id="btnAgregar">Agregar</button>
 
-    <table border="solid" id="tbody">
-        <th>id</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <tbody></tbody>
-    </table>
-
+        <table border="solid" id="tabla">
+            <th>id</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Eliminar</th>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
     <script>
 
         // buscar productos dentro de la table
@@ -30,39 +34,57 @@
             { id: "MEPC7", nombre: "Soda 400Ml", precio: 890 },
             { id: "5346", nombre: "Helado 5L", precio: 14990 },
             { id: "345F", nombre: "Hielo 1kg", precio: 5990 },
-            { id: "345F", nombre: "Agua 1.5L", precio: 14990 },
+            { id: "878FG", nombre: "Agua 1.5L", precio: 14990 },
             { id: "67867H", nombre: "Soda 400Ml", precio: 890 }
         ];
 
         const input = document.querySelector("#input")
         const btnBuscar = document.querySelector("#btnBuscar")
         const tbody = document.querySelector("#tbody")
+        const inputAdd = document.querySelector("#inputAdd")
+        const btnAgregar = document.querySelector("#btnAgregar")
+        const tabla = document.querySelector("#tabla")
 
-        const render = (tareas) => {
-            tbody.innerHTML = "";
-            tareas.forEach((tarea) => {
-                tbody.innerHTML += `
+        const render = (lista = tareas) => {
+            tbody.innerHTML = lista.map(tarea => `
                 <tr>
                      <td>${tarea.id}</td>
                      <td>${tarea.nombre}</td>
                      <td>${tarea.precio}</td>
+                     <td><button type="button" class="btn-borrar" data-id="${tarea.id}">x</button></td>
+                     <td><button type="button" class="btn-modificar" data-id="${tarea.id}">Modificar</button></td>
                 </tr>
-                `;
+                `).join("");
 
-            });
+        };
 
+
+        tbody.addEventListener("click", (e) => {
+            const btn = e.target.closest(".btn-borrar");
+            if (!btn) return;
+            const id = btn.dataset.id;
+            const eliminarTarea = tareas.findIndex(tarea => tarea.id === id)
+            if (eliminarTarea !== -1) {
+                tareas.splice(eliminarTarea, 1)
+                render();
+            }
         }
-
-        render(tareas);
+        );
+        render();
 
         btnBuscar.addEventListener("click", () => {
-            const buscar = input.value
-            const filtrarTareas = tareas.filter((tareas) => tareas.precio >= buscar)
+            const buscar = Number(input.value)
+            const filtrarTareas = tareas.filter((tarea) => tarea.precio >= buscar)
+
             render(filtrarTareas)
 
         })
 
+        btnAgregar.addEventListener("click", () => {
+            const nuevaTarea = inputAdd.value.trim()
+            tareas.push(inputAdd)
 
+        })
 
     </script>
 
