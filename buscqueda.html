@@ -44,6 +44,7 @@
         const inputAdd = document.querySelector("#inputAdd")
         const btnAgregar = document.querySelector("#btnAgregar")
         const tabla = document.querySelector("#tabla")
+        const cuentaTareas = document.querySelector("#cuenta-tareas")
 
         const render = (lista = tareas) => {
             tbody.innerHTML = lista.map(tarea => `
@@ -82,7 +83,12 @@
 
         btnAgregar.addEventListener("click", () => {
             const nuevaTarea = inputAdd.value.trim()
-            tareas.push(inputAdd)
+            if (!nuevaTarea) return
+            tareas.push
+                ({ id: String(Date.now()), nombre: nuevaTarea, precio: Number(0) })
+            inputAdd.value = "";
+            render()
+            cuentaTareas.textContent = tareas.length;
 
         })
 
