@@ -21,22 +21,26 @@
     const tareas = document.querySelector("#listadoTareas");
     const cuentaTareas = document.querySelector("#cuenta-tareas")
 
+
     const listado_tareas = []
+
+    const render = () => {
+      let html = "";
+      for (let listado of listado_tareas)
+        html += `<li>${listado.nombre} <button onclick="borrar(${listado.id})">Eliminar</button></li>`
+      tareas.innerHTML = html;
+    }
+
     agregarTarea.addEventListener("click", () => {
       const nuevaTarea = inputTarea.value.trim();
-      if (nuevaTarea === "") return;
+      if (!nuevatarea) return;
       listado_tareas.push({ id: Date.now(), nombre: nuevaTarea })
       inputTarea.value = "";
       cuentaTareas.textContent = listado_tareas.length;
 
-      let html = "";
-      for (let listado of listado_tareas)
-        html += `<li>${listado.nombre} <button onclick="borrar(${listado.id})">Eliminar</button></li>`
-
-      tareas.innerHTML = html;
 
     })
-    function borrar(id) {
+    const borrar = (id) => {
       const index = listado_tareas.findIndex((ele) => ele.id === id)
       if (index === -1) return;
 
@@ -59,7 +63,7 @@
 
 
 
-  <script>
+  <!-- <script>
     const inputTarea = document.querySelector("#nombreTarea");
     const agregarTarea = document.querySelector("#btnAgregar");
     const tareas = document.querySelector("#listadoTareas");
@@ -98,7 +102,7 @@
     inputTarea.addEventListener("keyup", (e) => {
       if (e.key === "Enter") agregarTarea.click();
     });
-  </script>
+  </script> -->
 </body>
 
 </html>
